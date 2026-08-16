@@ -7,7 +7,7 @@ import { usePokemonByType } from "@/hooks/usePokemonByType";
 import { PokemonGrid } from "@/components/pokemon/pokemon-grid";
 import { EmptyState } from "@/components/pokemon/empty-state";
 import { Button } from "@/components/ui/button";
-import { Loader2, Heart, Sparkles } from "lucide-react";
+import { Loader2, Heart } from "lucide-react";
 import { useMemo, Suspense } from "react";
 import { SearchBar } from "@/components/pokemon/search-bar";
 import { TypeFilter } from "@/components/pokemon/type-filter";
@@ -247,9 +247,7 @@ function ExplorerContent() {
                 Loading Pokémon...
               </>
             ) : (
-              <>
-                Load More Pokémon
-              </>
+              <>Load More Pokémon</>
             )}
           </Button>
         </div>
@@ -257,8 +255,6 @@ function ExplorerContent() {
     </>
   );
 }
-
-
 
 export default function Home() {
   return (
