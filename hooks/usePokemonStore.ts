@@ -44,11 +44,11 @@ export const usePokemonStore = create<PokemonState>()(
 
       addToCompare: (pokemon) => {
         set((state) => {
-          //to preenevtn duplciates
+          // to prevent duplicates
           if (state.compareQueue.find((p) => p.id === pokemon.id)) {
             return state;
           }
-          //max qeueue is 2
+          // max queue is 2
           if (state.compareQueue.length >= 2) {
             return { compareQueue: [state.compareQueue[1], pokemon] };
           }

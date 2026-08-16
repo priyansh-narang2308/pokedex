@@ -1,6 +1,7 @@
 "use client";
 
 import { usePokemons } from "@/hooks/usePokemons";
+import { SortFilter } from "@/components/pokemon/sort-filter";
 import { useAllPokemons } from "@/hooks/useAllPokemons";
 import { usePokemonByType } from "@/hooks/usePokemonByType";
 import { PokemonGrid } from "@/components/pokemon/pokemon-grid";
@@ -247,7 +248,6 @@ function ExplorerContent() {
               </>
             ) : (
               <>
-                <Sparkles className="mr-2 h-4 w-4 text-amber-400" />
                 Load More Pokémon
               </>
             )}
@@ -257,6 +257,8 @@ function ExplorerContent() {
     </>
   );
 }
+
+
 
 export default function Home() {
   return (
@@ -278,7 +280,10 @@ export default function Home() {
       >
         <div className="relative z-20 flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <SearchBar />
-          <TypeFilter />
+          <div className="flex flex-col sm:flex-row gap-4 w-full xl:w-auto">
+            <TypeFilter />
+            <SortFilter />
+          </div>
         </div>
         <ExplorerContent />
       </Suspense>
