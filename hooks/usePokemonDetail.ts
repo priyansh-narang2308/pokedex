@@ -6,6 +6,7 @@ export interface PokemonDetail {
   name: string;
   height: number;
   weight: number;
+  base_experience?: number;
   types: {
     slot: number;
     type: {
@@ -28,6 +29,12 @@ export interface PokemonDetail {
     };
     is_hidden: boolean;
     slot: number;
+  }[];
+  moves?: {
+    move: {
+      name: string;
+      url: string;
+    };
   }[];
   sprites: {
     front_default: string;

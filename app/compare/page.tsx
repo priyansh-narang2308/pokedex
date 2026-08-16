@@ -73,7 +73,7 @@ export default function ComparePage() {
   });
 
   return (
-    <div className="relative min-h-screen pb-20">
+    <div className="relative -mt-4 pb-20">
       <div className="fixed inset-0 z-0 flex">
         <div
           className="h-full w-1/2 opacity-20 blur-[120px] transition-colors duration-1000"
@@ -85,7 +85,7 @@ export default function ComparePage() {
         />
       </div>
 
-      <div className="relative z-10 container mx-auto max-w-5xl px-4 py-8">
+      <div className="relative z-10 mx-auto w-full max-w-5xl pt-0">
         <Link
           href="/"
           className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold shadow-sm backdrop-blur-md transition-colors hover:bg-white/10 dark:hover:bg-white/10"
