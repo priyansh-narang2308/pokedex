@@ -7,8 +7,11 @@ A modern, high-performance Pokédex web application built with Next.js 16 (App R
 ## Screenshots
 
 <div align="center">
-  <img src="./public/screenshots/list-view.png" alt="Pokédex List View" width="48%" />
-  <img src="./public/screenshots/detail-view.png" alt="Pokédex Detail View" width="48%" />
+  <img src="./screenshots/Explore.png" alt="Explore View" width="49%" />
+  <img src="./screenshots/LightMode.png" alt="Light Mode" width="49%" />
+  <img src="./screenshots/Individual.png" alt="Detail View" width="49%" />
+  <img src="./screenshots/Compare.png" alt="Compare View" width="49%" />
+  <img src="./screenshots/Favs.png" alt="Favorites View" width="98%" />
 </div>
 
 ---
