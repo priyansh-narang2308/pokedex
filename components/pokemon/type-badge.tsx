@@ -1,5 +1,5 @@
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { getPokemonColor } from "@/lib/colors";
 
 interface TypeBadgeProps {
   type: string;
@@ -7,18 +7,21 @@ interface TypeBadgeProps {
 }
 
 export function TypeBadge({ type, className }: TypeBadgeProps) {
-  const normalizedType = type.toLowerCase();
+  const bgColor = getPokemonColor(type);
 
   return (
-    <Badge
-      variant="outline"
+    <span
       className={cn(
-        "capitalize text-[10px] sm:text-xs font-semibold px-2.5 py-0.5 border-transparent text-white shadow-sm",
+        "inline-flex items-center justify-center rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm backdrop-blur-md transition-transform hover:scale-105",
         className,
       )}
-      style={{ backgroundColor: `var(--color-type-${normalizedType})` }}
+      style={{
+        backgroundColor: bgColor,
+        border: `1px solid rgba(255, 255, 255, 0.25)`,
+        textShadow: "0px 1px 2px rgba(0,0,0,0.5)",
+      }}
     >
       {type}
-    </Badge>
+    </span>
   );
 }

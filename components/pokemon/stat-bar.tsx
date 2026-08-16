@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { getPokemonColor } from "@/lib/colors";
 
 interface StatBarProps {
   label: string;
@@ -19,7 +20,7 @@ export function StatBar({
   className,
 }: StatBarProps) {
   const [progress, setProgress] = useState(0);
-  const normalizedType = type.toLowerCase();
+  const mainColor = getPokemonColor(type);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -43,7 +44,7 @@ export function StatBar({
           className="h-full rounded-full transition-all duration-1000 ease-out"
           style={{
             width: `${progress}%`,
-            backgroundColor: `var(--color-type-${normalizedType})`,
+            backgroundColor: mainColor,
           }}
         />
       </div>

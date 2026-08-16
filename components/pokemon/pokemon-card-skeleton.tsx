@@ -13,9 +13,14 @@ export function PokemonCardSkeleton({ className }: PokemonCardSkeletonProps) {
         className,
       )}
     >
-      <div className="flex items-center justify-between">
-        <Skeleton className="h-6 w-24" />
-        <Skeleton className="h-5 w-10" />
+      <div className="relative z-10 flex items-start justify-between">
+        <div className="space-y-2">
+          <Skeleton className="h-7 w-28 rounded-md" />
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-4 w-12 rounded-md" />
+            <Skeleton className="h-6 w-6 rounded-full" />
+          </div>
+        </div>
       </div>
 
       <div className="relative mt-4 flex aspect-square items-center justify-center p-4">

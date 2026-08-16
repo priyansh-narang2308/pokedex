@@ -10,6 +10,7 @@ import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePokemonStore } from "@/hooks/usePokemonStore";
 import { cn } from "@/lib/utils";
+import { getPokemonColor } from "@/lib/colors";
 
 interface PokemonCardProps {
   name: string;
@@ -48,6 +49,7 @@ export function PokemonCard({ name }: PokemonCardProps) {
   };
 
   const mainType = pokemon.types[0]?.type.name || "normal";
+  const mainColor = getPokemonColor(mainType);
   const formattedId = `#${pokemon.id.toString().padStart(3, "0")}`;
   const imageUrl =
     pokemon.sprites.other["official-artwork"].front_default ||
@@ -55,58 +57,59 @@ export function PokemonCard({ name }: PokemonCardProps) {
 
   return (
     <motion.div
-      whileHover={{ y: -6, scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      whileHover={{ y: -8, scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
       className="group relative h-full"
     >
       <Link href={`/?pokemon=${pokemon.name}`} scroll={false}>
-        <div className="relative flex h-full flex-col overflow-hidden rounded-3xl border bg-card p-5 shadow-sm transition-shadow hover:shadow-md">
+        <div className="relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/20 bg-white/10 p-5 sm:p-6 shadow-xl backdrop-blur-2xl transition-all duration-300 hover:shadow-2xl hover:bg-white/20 dark:border-white/10 dark:bg-black/20 dark:hover:bg-black/30">
           <div
-            className="absolute -right-12 -top-12 h-40 w-40 rounded-full opacity-20 blur-3xl transition-opacity duration-500 group-hover:opacity-40"
-            style={{ backgroundColor: `var(--color-type-${mainType})` }}
+            className="absolute inset-x-0 -bottom-10 m-auto h-40 w-40 rounded-full opacity-30 blur-[60px] transition-all duration-500 group-hover:scale-150 group-hover:opacity-50"
+            style={{ backgroundColor: mainColor }}
           />
 
           <div className="relative z-10 flex items-start justify-between">
-            <div>
-              <h2 className="text-xl font-bold capitalize tracking-tight text-foreground">
+            <div className="flex flex-col gap-1">
+              <h2 className="text-xl sm:text-2xl font-black capitalize tracking-tight text-foreground drop-shadow-sm">
                 {pokemon.name}
               </h2>
-              <span className="font-mono text-sm font-medium text-muted-foreground">
-                {formattedId}
-              </span>
+              <div className="flex items-center gap-2 mt-0.5">
+                <span className="font-mono text-xs font-semibold text-muted-foreground/80">
+                  {formattedId}
+                </span>
+                <button
+                  className={cn(
+                    "relative z-20 flex h-6 w-6 items-center justify-center rounded-full backdrop-blur-md transition-all cursor-pointer hover:scale-110",
+                    isFavorite
+                      ? "border border-red-500/30 bg-red-500/20 text-red-500"
+                      : "border border-black/5 bg-black/5 text-muted-foreground dark:border-white/5 dark:bg-white/5 dark:hover:bg-white/10",
+                  )}
+                  onClick={handleFavoriteClick}
+                >
+                  <Heart
+                    className={cn("h-3 w-3", isFavorite && "fill-current")}
+                  />
+                </button>
+              </div>
             </div>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "h-8 w-8 rounded-full transition-colors",
-                isFavorite
-                  ? "text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/50"
-                  : "text-muted-foreground hover:text-foreground",
-              )}
-              onClick={handleFavoriteClick}
-            >
-              <Heart className={cn("h-5 w-5", isFavorite && "fill-current")} />
-            </Button>
           </div>
 
-          <div className="relative z-10 mt-4 flex aspect-square items-center justify-center">
+          <div className="relative z-10 my-6 flex flex-1 items-center justify-center min-h-30">
             <div
-              className="absolute inset-0 m-auto h-[80%] w-[80%] rounded-full opacity-10 transition-transform duration-500 group-hover:scale-110"
-              style={{ backgroundColor: `var(--color-type-${mainType})` }}
+              className="absolute inset-0 m-auto h-25 w-25 rounded-full opacity-15 transition-transform duration-500 group-hover:scale-110"
+              style={{ backgroundColor: mainColor }}
             />
             <Image
               src={imageUrl}
               alt={pokemon.name}
-              width={200}
-              height={200}
-              className="relative z-20 object-contain drop-shadow-xl transition-transform duration-500 group-hover:scale-110"
+              width={140}
+              height={140}
+              className="relative z-20 object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-110"
               unoptimized
             />
           </div>
 
-          <div className="relative z-10 mt-auto pt-4 flex gap-2">
+          <div className="relative z-10 mt-auto flex flex-wrap gap-2 pt-2">
             {pokemon.types.map((t) => (
               <TypeBadge key={t.type.name} type={t.type.name} />
             ))}
