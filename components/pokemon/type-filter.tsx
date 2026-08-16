@@ -9,9 +9,28 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  useSelectContext,
 } from "@/components/motion/select";
+import { useEffect, useRef } from "react";
 
 const types = Object.keys(POKEMON_TYPE_COLORS);
+
+function ScrollContainer({ children, className }: { children: React.ReactNode, className?: string }) {
+  const ctx = useSelectContext("ScrollContainer");
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (ctx.open && scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
+    }
+  }, [ctx.open]);
+
+  return (
+    <div ref={scrollRef} className={className}>
+      {children}
+    </div>
+  );
+}
 
 export function TypeFilter() {
   const router = useRouter();
@@ -39,13 +58,13 @@ export function TypeFilter() {
   };
 
   return (
-    <div className="w-full xl:w-60">
+    <div className="w-full xl:w-52">
       <Select value={currentType} onValueChange={onValueChange}>
-        <SelectTrigger className="h-14 w-full cursor-pointer rounded-full border-white/20 bg-white/10 pl-6 pr-6 text-base font-bold capitalize tracking-wide shadow-sm backdrop-blur-xl transition-all hover:bg-white/20 focus-visible:ring-primary dark:border-white/10 dark:bg-black/20 dark:hover:bg-black/30">
+        <SelectTrigger className="h-12 w-full cursor-pointer rounded-full border-white/20 bg-white/10 pl-5 pr-5 text-sm font-bold capitalize tracking-wide shadow-sm backdrop-blur-xl transition-all hover:bg-white/20 focus-visible:ring-primary dark:border-white/10 dark:bg-black/20 dark:hover:bg-black/30">
           <SelectValue placeholder="All Types" />
         </SelectTrigger>
         <SelectContent className="rounded-[1.5rem] border border-white/20 bg-background/80 p-2 shadow-2xl backdrop-blur-3xl dark:border-white/10 dark:bg-black/80">
-          <div className="flex max-h-75 flex-col gap-1 overflow-y-auto pr-1 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/20">
+          <ScrollContainer className="flex max-h-60 flex-col gap-1 overflow-y-auto overscroll-contain pr-1 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/20">
             <SelectItem
               value="all"
               className="cursor-pointer rounded-xl px-4 py-3 font-bold transition-all hover:bg-white/10 dark:hover:bg-white/10"
@@ -73,7 +92,7 @@ export function TypeFilter() {
                 </SelectItem>
               );
             })}
-          </div>
+          </ScrollContainer>
         </SelectContent>
       </Select>
     </div>

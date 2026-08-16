@@ -58,7 +58,7 @@ interface SelectContextValue {
 
 const SelectContext = createContext<SelectContextValue | null>(null);
 
-function useSelectContext(component: string) {
+export function useSelectContext(component: string) {
   const ctx = useContext(SelectContext);
   if (!ctx) throw new Error(`${component} must be used within <Select>`);
   return ctx;
