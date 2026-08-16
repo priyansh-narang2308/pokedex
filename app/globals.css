@@ -46,6 +46,26 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Pokemon Type Colors - Professional Clean Palette */
+  --color-type-normal: #A8A29E;
+  --color-type-fire: #EF4444;
+  --color-type-water: #3B82F6;
+  --color-type-grass: #22C55E;
+  --color-type-electric: #EAB308;
+  --color-type-ice: #06B6D4;
+  --color-type-fighting: #B91C1C;
+  --color-type-poison: #A855F7;
+  --color-type-ground: #D97706;
+  --color-type-flying: #818CF8;
+  --color-type-psychic: #EC4899;
+  --color-type-bug: #84CC16;
+  --color-type-rock: #78716C;
+  --color-type-ghost: #6366F1;
+  --color-type-dragon: #4F46E5;
+  --color-type-dark: #1E293B;
+  --color-type-steel: #94A3B8;
+  --color-type-fairy: #F472B6;
 }
 
 :root {
