@@ -11,6 +11,7 @@ import { Heart, Scale } from "lucide-react";
 import { usePokemonStore } from "@/hooks/usePokemonStore";
 import { cn } from "@/lib/utils";
 import { getPokemonColor } from "@/lib/colors";
+import { useToast } from "@/components/toast-provider";
 
 interface PokemonCardProps {
   name: string;
@@ -23,6 +24,7 @@ export function PokemonCard({ name }: PokemonCardProps) {
   const compareQueue = usePokemonStore((state) => state.compareQueue);
   const addToCompare = usePokemonStore((state) => state.addToCompare);
   const removeFromCompare = usePokemonStore((state) => state.removeFromCompare);
+  const { showToast } = useToast();
 
   if (isLoading) {
     return <PokemonCardSkeleton />;
@@ -50,6 +52,20 @@ export function PokemonCard({ name }: PokemonCardProps) {
         "/placeholder.svg",
       types: pokemon.types.map((t) => t.type.name),
     });
+
+    if (isFavorite) {
+      showToast({
+        title: "Removed from Favorites",
+        description: `${pokemon.name} has been removed from your favorites.`,
+        status: "info",
+      });
+    } else {
+      showToast({
+        title: "Added to Favorites",
+        description: `${pokemon.name} has been added to your favorites!`,
+        status: "success",
+      });
+    }
   };
 
   const handleCompareClick = (e: React.MouseEvent) => {

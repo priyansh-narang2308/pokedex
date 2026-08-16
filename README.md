@@ -4,6 +4,15 @@ A modern, high-performance Pokédex web application built with Next.js 16 (App R
 
 ---
 
+## Screenshots
+
+<div align="center">
+  <img src="./public/screenshots/list-view.png" alt="Pokédex List View" width="48%" />
+  <img src="./public/screenshots/detail-view.png" alt="Pokédex Detail View" width="48%" />
+</div>
+
+---
+
 ## Features
 
 - **Paginated Exploration & Infinite Scroll**: Browse through the complete Pokédex with smooth pagination and infinite scrolling powered by TanStack React Query.

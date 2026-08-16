@@ -105,7 +105,7 @@ export function Header() {
                     {link.label === "Compare" &&
                       mounted &&
                       compareQueue.length > 0 && (
-                        <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground shadow-sm">
+                        <span className="ml-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground shadow-sm">
                           {compareQueue.length}
                         </span>
                       )}
