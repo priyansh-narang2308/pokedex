@@ -6,6 +6,10 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { TypeBadge } from "./type-badge";
+import { Heart } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { usePokemonStore } from "@/hooks/usePokemonStore";
+import { cn } from "@/lib/utils";
 
 interface PokemonCardProps {
   name: string;
@@ -13,6 +17,8 @@ interface PokemonCardProps {
 
 export function PokemonCard({ name }: PokemonCardProps) {
   const { data: pokemon, isLoading, isError } = usePokemonDetail(name);
+  const favorites = usePokemonStore((state) => state.favorites);
+  const toggleFavorite = usePokemonStore((state) => state.toggleFavorite);
 
   if (isLoading) {
     return <PokemonCardSkeleton />;
@@ -25,6 +31,21 @@ export function PokemonCard({ name }: PokemonCardProps) {
       </div>
     );
   }
+
+  const isFavorite = !!favorites[pokemon.id];
+
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFavorite({
+      id: pokemon.id,
+      name: pokemon.name,
+      image:
+        pokemon.sprites.other["official-artwork"].front_default ||
+        "/placeholder.svg",
+      types: pokemon.types.map((t) => t.type.name),
+    });
+  };
 
   const mainType = pokemon.types[0]?.type.name || "normal";
   const formattedId = `#${pokemon.id.toString().padStart(3, "0")}`;
@@ -45,13 +66,29 @@ export function PokemonCard({ name }: PokemonCardProps) {
             style={{ backgroundColor: `var(--color-type-${mainType})` }}
           />
 
-          <div className="relative z-10 flex items-center justify-between">
-            <h2 className="text-xl font-bold capitalize tracking-tight text-foreground">
-              {pokemon.name}
-            </h2>
-            <span className="font-mono text-sm font-medium text-muted-foreground">
-              {formattedId}
-            </span>
+          <div className="relative z-10 flex items-start justify-between">
+            <div>
+              <h2 className="text-xl font-bold capitalize tracking-tight text-foreground">
+                {pokemon.name}
+              </h2>
+              <span className="font-mono text-sm font-medium text-muted-foreground">
+                {formattedId}
+              </span>
+            </div>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                "h-8 w-8 rounded-full transition-colors",
+                isFavorite
+                  ? "text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/50"
+                  : "text-muted-foreground hover:text-foreground",
+              )}
+              onClick={handleFavoriteClick}
+            >
+              <Heart className={cn("h-5 w-5", isFavorite && "fill-current")} />
+            </Button>
           </div>
 
           <div className="relative z-10 mt-4 flex aspect-square items-center justify-center">
