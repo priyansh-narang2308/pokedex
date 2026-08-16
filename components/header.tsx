@@ -11,6 +11,7 @@ import Link from "next/link";
 import { Scale } from "lucide-react";
 import { usePokemonStore } from "@/hooks/usePokemonStore";
 import { useEffect, useState } from "react";
+import { useToast } from "@/components/toast-provider";
 
 export const navLinks = [
   {
@@ -33,9 +34,26 @@ export function Header() {
   const compareQueue = usePokemonStore((state) => state.compareQueue);
   const [mounted, setMounted] = useState(false);
 
+  const { showToast } = useToast();
+
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handleNavigation = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    linkLabel: string,
+  ) => {
+    if (linkLabel === "Compare" && compareQueue.length < 2) {
+      e.preventDefault();
+
+      showToast({
+        status: "error",
+        title: "Cannot compare yet",
+        description: "Add at least two Pokémon before comparing.",
+      });
+    }
+  };
 
   return (
     <header
@@ -55,6 +73,7 @@ export function Header() {
           },
         )}
       >
+        {/* Logo */}
         <Link
           className="rounded-md p-2 transition-colors hover:bg-muted dark:hover:bg-muted/50"
           href="/"
@@ -62,19 +81,22 @@ export function Header() {
           <Logo />
         </Link>
 
+        {/* Desktop Navigation */}
         <div className="hidden items-center gap-3 md:flex">
           <div className="flex items-center gap-1 rounded-xl border bg-muted/30 p-1">
             {navLinks.map((link) => {
               const Icon = link.icon;
 
               return (
-                <Link key={link.label} href={link.href}>
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => handleNavigation(e, link.label)}
+                >
                   <Button
                     size="sm"
                     variant="ghost"
-                    className={cn(
-                      "relative gap-2 cursor-pointer rounded-lg px-3 transition-all hover:bg-background hover:shadow-sm",
-                    )}
+                    className="relative cursor-pointer gap-2 rounded-lg px-3 transition-all hover:bg-background hover:shadow-sm"
                   >
                     {Icon && <Icon className="h-4 w-4" />}
 
@@ -83,7 +105,7 @@ export function Header() {
                     {link.label === "Compare" &&
                       mounted &&
                       compareQueue.length > 0 && (
-                        <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground shadow-sm">
+                        <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground shadow-sm">
                           {compareQueue.length}
                         </span>
                       )}
@@ -96,7 +118,6 @@ export function Header() {
           <ModeToggle />
         </div>
 
-        {/* Mobile Navigation */}
         <div className="flex items-center gap-2 md:hidden">
           <ModeToggle />
           <MobileNav />

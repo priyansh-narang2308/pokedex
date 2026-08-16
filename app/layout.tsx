@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Providers } from "@/components/Providers";
 import { Header } from "@/components/header";
 import { CompareDock } from "@/components/pokemon/compare-dock";
+import { ToastProvider } from "@/components/toast-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,11 +34,15 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Header />
-            <main className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
-              {children}
-            </main>
-            <CompareDock />
+            <ToastProvider>
+              <Header />
+
+              <main className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+                {children}
+              </main>
+
+              <CompareDock />
+            </ToastProvider>
           </ThemeProvider>
         </Providers>
       </body>
