@@ -6,15 +6,7 @@ import { getPokemonColor, getStatColor } from "@/lib/colors";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ChevronLeft,
-  Heart,
-  Scale,
-  Sparkles,
-  Activity,
-  Shield,
-  Zap,
-} from "lucide-react";
+import { ChevronLeft, Heart, Scale } from "lucide-react";
 import { usePokemonStore } from "@/hooks/usePokemonStore";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/toast-provider";
@@ -121,12 +113,10 @@ export function PokemonDetailView({ pokemon }: PokemonDetailViewProps) {
     }
   };
 
-  // Top moves to showcase
   const topMoves = pokemon.moves?.slice(0, 12) || [];
 
   return (
     <div className="relative -mt-4 pb-20">
-      {/* Dynamic Ambient Background Glow */}
       <div
         className="pointer-events-none fixed inset-0 z-0 opacity-25 blur-[140px] transition-colors duration-1000"
         style={{ backgroundColor: mainColor }}
@@ -139,7 +129,6 @@ export function PokemonDetailView({ pokemon }: PokemonDetailViewProps) {
           variants={containerVariants}
           className="flex flex-col gap-5"
         >
-          {/* Top Bar Navigation & Actions */}
           <motion.div
             variants={itemVariants}
             className="flex items-center justify-between"
@@ -183,9 +172,7 @@ export function PokemonDetailView({ pokemon }: PokemonDetailViewProps) {
             </div>
           </motion.div>
 
-          {/* Main Grid: Left Artwork & Right Detailed Stats */}
           <div className="grid gap-6 md:grid-cols-12 md:gap-6">
-            {/* Left Column (5 cols): Large Artwork Card */}
             <motion.div
               variants={itemVariants}
               className="flex flex-col items-center rounded-[3rem] border border-white/20 bg-white/10 p-8 sm:p-10 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-black/20 md:col-span-5"
@@ -209,7 +196,6 @@ export function PokemonDetailView({ pokemon }: PokemonDetailViewProps) {
                 </div>
               </div>
 
-              {/* Glowing Pokemon Artwork with Spring & Floating Effect */}
               <div className="relative my-auto flex h-72 w-72 items-center justify-center py-6 sm:h-84 sm:w-84">
                 <div
                   className="absolute inset-0 m-auto h-[85%] w-[85%] rounded-full opacity-35 blur-3xl transition-colors duration-500"
@@ -238,9 +224,7 @@ export function PokemonDetailView({ pokemon }: PokemonDetailViewProps) {
               </div>
             </motion.div>
 
-            {/* Right Column (7 cols): Physical Stats, Abilities, Base Stats, Moves */}
             <div className="flex flex-col gap-6 md:col-span-7">
-              {/* Physical Traits */}
               <motion.div
                 variants={itemVariants}
                 className="grid grid-cols-2 gap-4"
@@ -263,7 +247,6 @@ export function PokemonDetailView({ pokemon }: PokemonDetailViewProps) {
                 </div>
               </motion.div>
 
-              {/* Abilities */}
               <motion.div
                 variants={itemVariants}
                 className="rounded-[2.5rem] border border-white/20 bg-white/10 p-6 sm:p-8 shadow-xl backdrop-blur-2xl dark:border-white/10 dark:bg-black/20"
@@ -295,7 +278,6 @@ export function PokemonDetailView({ pokemon }: PokemonDetailViewProps) {
                 </div>
               </motion.div>
 
-              {/* Base Stats with Animated Bars */}
               <motion.div
                 variants={itemVariants}
                 className="rounded-[2.5rem] border border-white/20 bg-white/10 p-6 sm:p-8 shadow-xl backdrop-blur-2xl dark:border-white/10 dark:bg-black/20"
@@ -351,7 +333,6 @@ export function PokemonDetailView({ pokemon }: PokemonDetailViewProps) {
                 </div>
               </motion.div>
 
-              {/* Moves Showcase */}
               {topMoves.length > 0 && (
                 <motion.div
                   variants={itemVariants}
