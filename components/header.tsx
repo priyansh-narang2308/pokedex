@@ -64,7 +64,7 @@ export function Header() {
             ))}
           </div>
 
-          <Button size="sm" variant="outline" className="gap-2 relative">
+          <Button size="sm" variant="outline" className="gap-2 cursor-pointer relative">
             <Scale className="h-4 w-4" />
             Compare
             {mounted && compareQueue.length > 0 && (
