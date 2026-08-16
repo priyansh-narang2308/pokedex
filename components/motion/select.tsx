@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-// beui.dev/components/motion/select
 
 import { Check, ChevronDown } from "lucide-react";
 import {
@@ -24,9 +24,6 @@ import { EASE_OUT } from "@/lib/ease";
 import { cn } from "@/lib/utils";
 
 const INSTANT_TRANSITION: Transition = { duration: 0 };
-
-// Spring with bounce powers the unfold/separation; per-property timings in the
-// content choreograph it (see SelectContent). Mirrors bouncy-accordion's feel.
 const CHEVRON_TRANSITION: Transition = { type: "spring", duration: 0.4, bounce: 0.3 };
 
 const LIST_VARIANTS: Variants = {
@@ -112,8 +109,6 @@ export function Select({
       return next;
     });
   }, []);
-
-  // close on outside pointer / escape
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
@@ -176,8 +171,6 @@ export interface SelectTriggerProps {
 export function SelectTrigger({ className, children }: SelectTriggerProps) {
   const ctx = useSelectContext("SelectTrigger");
   const isTop = ctx.placement === "top";
-  // edge facing the panel flattens then rounds; the far edge stays rounded.
-  // All four corners are specified so none gets stranded when placement flips.
   const kf = ctx.open ? [0, 0, 12] : [12, 0, 12];
   const kfT: Transition = ctx.reduce
     ? { duration: 0 }
@@ -193,8 +186,6 @@ export function SelectTrigger({ className, children }: SelectTriggerProps) {
       aria-expanded={ctx.open}
       aria-controls={ctx.listId}
       onClick={() => ctx.setOpen(!ctx.open)}
-      // Gooey: the edge facing the panel snaps flat (panel attached) then rounds
-      // back once the panel pulls away — the two pinch apart.
       initial={false}
       animate={{
         borderTopLeftRadius: isTop ? kf : 12,
@@ -266,8 +257,6 @@ export function SelectContent({ className, children }: SelectContentProps) {
     observer.observe(node);
     return () => observer.disconnect();
   });
-
-  // On open, flip upward when there isn't room below and there's more above.
   useLayoutEffect(() => {
     if (!open) return;
     const trigger = document.getElementById(ctx.triggerId);
@@ -279,11 +268,6 @@ export function SelectContent({ className, children }: SelectContentProps) {
     const above = rect.top;
     setPlacement(below < h + 16 && above > below ? "top" : "bottom");
   }, [open, ctx.triggerId, setPlacement]);
-
-  // Specify EVERY corner + both margins each render. The near edge (facing the
-  // trigger) animates flat->round and the gap opens on that side; the far edge
-  // stays rounded and its margin pinned to 0. Setting all of them avoids a
-  // stranded square corner when the placement flips between opens.
   const isTop = ctx.placement === "top";
   const nearGap = open ? 8 : 0;
   const nearRadius = open ? 12 : 0;
@@ -294,10 +278,6 @@ export function SelectContent({ className, children }: SelectContentProps) {
   const radiusT: Transition = open
     ? { duration: 0.3, ease: EASE_OUT, delay: 0.14 }
     : { duration: 0.16, ease: EASE_OUT };
-
-  // Items stay mounted (open just animates the panel) so each item's label
-  // registration persists — otherwise the trigger would fall back to the
-  // placeholder the moment the panel closes.
   return (
     <motion.div
       id={ctx.listId}
@@ -312,10 +292,8 @@ export function SelectContent({ className, children }: SelectContentProps) {
           : {
               opacity: open ? 1 : 0,
               height: open ? height : 0,
-              // gap opens on the side facing the trigger
               marginTop: isTop ? 0 : nearGap,
               marginBottom: isTop ? nearGap : 0,
-              // near corners go flat->round; far corners stay rounded
               borderTopLeftRadius: isTop ? 12 : nearRadius,
               borderTopRightRadius: isTop ? 12 : nearRadius,
               borderBottomLeftRadius: isTop ? nearRadius : 12,
@@ -345,8 +323,6 @@ export function SelectContent({ className, children }: SelectContentProps) {
         overflow: "hidden",
         pointerEvents: open ? "auto" : "none",
       }}
-      // flush against the trigger, then separates into its own rounded pill;
-      // sits above or below depending on available space
       className={cn(
         "absolute left-0 right-0 z-20 rounded-xl border border-border bg-background shadow-lg",
         isTop ? "bottom-full" : "top-full",
@@ -386,7 +362,6 @@ export function SelectItem({
   useLayoutEffect(() => {
     ctx.register(value, label);
     return () => ctx.unregister(value);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ctx.register, ctx.unregister, value, label]);
 
   return (

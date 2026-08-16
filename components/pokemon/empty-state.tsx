@@ -91,13 +91,13 @@ export function EmptyState({
         className,
       )}
     >
-      {/* Ambient Radial Glow */}
+      {}
       <div
         className="pointer-events-none absolute inset-0 m-auto h-48 w-48 rounded-full blur-[70px]"
         style={{ backgroundColor: config.glowColor }}
       />
 
-      {/* Floating Animated Icon */}
+      {}
       <motion.div
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
@@ -106,7 +106,7 @@ export function EmptyState({
         <Icon className={cn("h-10 w-10", config.iconColor)} />
       </motion.div>
 
-      {/* Texts */}
+      {}
       <h3 className="relative z-10 text-2xl font-black tracking-tight sm:text-3xl">
         {config.title}
       </h3>
@@ -114,7 +114,7 @@ export function EmptyState({
         {config.description}
       </p>
 
-      {/* Action Button */}
+      {}
       <div className="relative z-10 mt-8">
         {actionHref ? (
           <Link href={actionHref}>

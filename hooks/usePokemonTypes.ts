@@ -21,7 +21,6 @@ export function usePokemonTypes() {
         (type) => type.name !== "unknown" && type.name !== "stellar",
       );
     },
-    // Types rarely change, cache for 24 hours
     staleTime: 1000 * 60 * 60 * 24,
   });
 }

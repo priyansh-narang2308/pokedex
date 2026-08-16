@@ -6,6 +6,6 @@ export function useAllPokemons() {
   return useQuery({
     queryKey: ["pokemons", "all"],
     queryFn: () => fetchApi<PokemonListResponse>("/pokemon?limit=1302"),
-    staleTime: 1000 * 60 * 60 * 24, // 24 hours caching since this rarely changes
+    staleTime: 1000 * 60 * 60 * 24,
   });
 }

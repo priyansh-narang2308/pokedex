@@ -51,7 +51,7 @@ export function SearchBar({ className }: SearchBarProps) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setQuery(currentSearch);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   return (

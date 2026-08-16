@@ -53,7 +53,7 @@ export default function ComparePage() {
     const s2 = p2.stats[index];
     const statName = s1.stat.name.replace("special-", "Sp. ");
 
-    let winner = 0; // 0 tie, 1 left, 2 right
+    let winner = 0;
     if (s1.base_stat > s2.base_stat) winner = 1;
     else if (s2.base_stat > s1.base_stat) winner = 2;
 

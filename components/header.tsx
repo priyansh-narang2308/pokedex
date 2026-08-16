@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/set-state-in-effect */
+
 "use client";
 
 import { cn } from "@/lib/utils";
@@ -37,6 +37,7 @@ export function Header() {
   const { showToast } = useToast();
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
@@ -73,7 +74,7 @@ export function Header() {
           },
         )}
       >
-        {/* Logo */}
+        {}
         <Link
           className="rounded-md p-2 transition-colors hover:bg-muted dark:hover:bg-muted/50"
           href="/"
@@ -81,7 +82,7 @@ export function Header() {
           <Logo />
         </Link>
 
-        {/* Desktop Navigation */}
+        {}
         <div className="hidden items-center gap-3 md:flex">
           <div className="flex items-center gap-1 rounded-xl border bg-muted/30 p-1">
             {navLinks.map((link) => {

@@ -23,8 +23,6 @@ function ExplorerContent() {
 
   const favorites = usePokemonStore((state) => state.favorites);
   const favoriteList = useMemo(() => Object.values(favorites), [favorites]);
-
-  // 1. Normal paginated fetching
   const {
     data: paginatedData,
     isLoading: isPaginatedLoading,
@@ -34,16 +32,12 @@ function ExplorerContent() {
     isError: isPaginatedError,
     refetch: refetchPaginated,
   } = usePokemons();
-
-  // 2. Fetch lightweight list of all pokemon names for instant partial search
   const {
     data: allNamesData,
     isLoading: isAllNamesLoading,
     isError: isAllNamesError,
     refetch: refetchAllNames,
   } = useAllPokemons();
-
-  // 3. Fetch list of pokemon by type
   const {
     data: typeData,
     isLoading: isTypeLoading,
@@ -55,24 +49,18 @@ function ExplorerContent() {
     if (!paginatedData) return [];
     return paginatedData.pages.flatMap((page) => page.results);
   }, [paginatedData]);
-
-  // SCENARIO 0: FAVORITES TAB ACTIVE
   if (tabParam === "favorites") {
     if (favoriteList.length === 0) {
       return <EmptyState type="favorites" />;
     }
 
     let filteredFavorites = favoriteList;
-
-    // Apply search filter if active
     if (search) {
       filteredFavorites = filteredFavorites.filter(
         (p) =>
           p.name.toLowerCase().includes(search) || p.id.toString() === search,
       );
     }
-
-    // Apply type filter if active
     if (typeParam) {
       filteredFavorites = filteredFavorites.filter((p) =>
         p.types.includes(typeParam),
@@ -111,8 +99,6 @@ function ExplorerContent() {
       </div>
     );
   }
-
-  // SCENARIO A: Type Filter is Active (Search may or may not be active)
   if (typeParam) {
     if (isTypeLoading) {
       return (
@@ -131,8 +117,6 @@ function ExplorerContent() {
         />
       );
     }
-
-    // If search is also present, filter the typedata by search
     let matches = typeData;
     if (search) {
       matches = typeData.filter(
@@ -162,8 +146,6 @@ function ExplorerContent() {
       </div>
     );
   }
-
-  // SCENARIO B: ONLY Search is Active (No Type Filter)
   if (search) {
     if (isAllNamesLoading) {
       return (
@@ -210,8 +192,6 @@ function ExplorerContent() {
       </div>
     );
   }
-
-  // SCENARIO C: Default Paginated Grid
   if (isPaginatedError) {
     return (
       <EmptyState
