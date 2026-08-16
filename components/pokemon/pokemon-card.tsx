@@ -69,8 +69,8 @@ export function PokemonCard({ name }: PokemonCardProps) {
           />
 
           <div className="relative z-10 flex items-start justify-between">
-            <div className="flex flex-col gap-1">
-              <h2 className="text-xl sm:text-2xl font-black capitalize tracking-tight text-foreground drop-shadow-sm">
+            <div className="flex flex-col gap-1 overflow-hidden">
+              <h2 className="truncate text-lg font-black capitalize tracking-tight text-foreground drop-shadow-sm sm:text-xl">
                 {pokemon.name}
               </h2>
               <div className="flex items-center gap-2 mt-0.5">
