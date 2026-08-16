@@ -386,6 +386,7 @@ export function SelectItem({
   useLayoutEffect(() => {
     ctx.register(value, label);
     return () => ctx.unregister(value);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ctx.register, ctx.unregister, value, label]);
 
   return (

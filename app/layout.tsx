@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Providers } from "@/components/Providers";
 import { Header } from "@/components/header";
+import { CompareDock } from "@/components/pokemon/compare-dock";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -11,8 +12,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "PokéExplorer",
-  description: "PokéExplorer - Explore and compare Pokémon",
+  title: "Pokédex",
+  description: "Pokédex - Explore and compare Pokémon",
 };
 
 export default function RootLayout({
@@ -36,6 +37,7 @@ export default function RootLayout({
             <main className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
               {children}
             </main>
+            <CompareDock />
           </ThemeProvider>
         </Providers>
       </body>

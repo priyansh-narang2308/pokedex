@@ -30,6 +30,7 @@ export interface PokemonDetail {
     slot: number;
   }[];
   sprites: {
+    front_default: string;
     other: {
       "official-artwork": {
         front_default: string;

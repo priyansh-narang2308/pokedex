@@ -22,3 +22,16 @@ export const POKEMON_TYPE_COLORS: Record<string, string> = {
 export function getPokemonColor(type: string): string {
   return POKEMON_TYPE_COLORS[type.toLowerCase()] || POKEMON_TYPE_COLORS.normal;
 }
+
+export const STAT_COLORS: Record<string, string> = {
+  hp: "#22C55E",
+  attack: "#EF4444",
+  defense: "#F97316",
+  "special-attack": "#3B82F6",
+  "special-defense": "#8B5CF6",
+  speed: "#EAB308",
+};
+
+export function getStatColor(stat: string): string {
+  return STAT_COLORS[stat.toLowerCase()] || "#A8A29E";
+}

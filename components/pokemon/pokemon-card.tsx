@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import { usePokemonDetail } from "@/hooks/usePokemonDetail";
@@ -6,8 +7,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { TypeBadge } from "./type-badge";
-import { Heart } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Heart, Scale } from "lucide-react";
 import { usePokemonStore } from "@/hooks/usePokemonStore";
 import { cn } from "@/lib/utils";
 import { getPokemonColor } from "@/lib/colors";
@@ -20,6 +20,9 @@ export function PokemonCard({ name }: PokemonCardProps) {
   const { data: pokemon, isLoading, isError } = usePokemonDetail(name);
   const favorites = usePokemonStore((state) => state.favorites);
   const toggleFavorite = usePokemonStore((state) => state.toggleFavorite);
+  const compareQueue = usePokemonStore((state) => state.compareQueue);
+  const addToCompare = usePokemonStore((state) => state.addToCompare);
+  const removeFromCompare = usePokemonStore((state) => state.removeFromCompare);
 
   if (isLoading) {
     return <PokemonCardSkeleton />;
@@ -34,6 +37,7 @@ export function PokemonCard({ name }: PokemonCardProps) {
   }
 
   const isFavorite = !!favorites[pokemon.id];
+  const isInCompare = compareQueue.some((p) => p.id === pokemon.id);
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -46,6 +50,23 @@ export function PokemonCard({ name }: PokemonCardProps) {
         "/placeholder.svg",
       types: pokemon.types.map((t) => t.type.name),
     });
+  };
+
+  const handleCompareClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isInCompare) {
+      removeFromCompare(pokemon.id);
+    } else {
+      addToCompare({
+        id: pokemon.id,
+        name: pokemon.name,
+        image:
+          pokemon.sprites.other["official-artwork"].front_default ||
+          "/placeholder.svg",
+        types: pokemon.types.map((t) => t.type.name),
+      });
+    }
   };
 
   const mainType = pokemon.types[0]?.type.name || "normal";
@@ -61,7 +82,7 @@ export function PokemonCard({ name }: PokemonCardProps) {
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       className="group relative h-full"
     >
-      <Link href={`/?pokemon=${pokemon.name}`} scroll={false}>
+      <Link href={`/pokemon/${pokemon.name}`} scroll={true}>
         <div className="relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/20 bg-white/10 p-5 sm:p-6 shadow-xl backdrop-blur-2xl transition-all duration-300 hover:shadow-2xl hover:bg-white/20 dark:border-white/10 dark:bg-black/20 dark:hover:bg-black/30">
           <div
             className="absolute inset-x-0 -bottom-10 m-auto h-40 w-40 rounded-full opacity-30 blur-[60px] transition-all duration-500 group-hover:scale-150 group-hover:opacity-50"
@@ -77,19 +98,33 @@ export function PokemonCard({ name }: PokemonCardProps) {
                 <span className="font-mono text-xs font-semibold text-muted-foreground/80">
                   {formattedId}
                 </span>
-                <button
-                  className={cn(
-                    "relative z-20 flex h-6 w-6 items-center justify-center rounded-full backdrop-blur-md transition-all cursor-pointer hover:scale-110",
-                    isFavorite
-                      ? "border border-red-500/30 bg-red-500/20 text-red-500"
-                      : "border border-black/5 bg-black/5 text-muted-foreground dark:border-white/5 dark:bg-white/5 dark:hover:bg-white/10",
-                  )}
-                  onClick={handleFavoriteClick}
-                >
-                  <Heart
-                    className={cn("h-3 w-3", isFavorite && "fill-current")}
-                  />
-                </button>
+                <div className="flex gap-1 relative z-20">
+                  <button
+                    className={cn(
+                      "flex h-6 w-6 items-center justify-center rounded-full backdrop-blur-md transition-all cursor-pointer hover:scale-110",
+                      isFavorite
+                        ? "border border-red-500/30 bg-red-500/20 text-red-500"
+                        : "border border-black/5 bg-black/5 text-muted-foreground dark:border-white/5 dark:bg-white/5 dark:hover:bg-white/10",
+                    )}
+                    onClick={handleFavoriteClick}
+                  >
+                    <Heart
+                      className={cn("h-3 w-3", isFavorite && "fill-current")}
+                    />
+                  </button>
+                  <button
+                    className={cn(
+                      "flex h-6 w-6 items-center justify-center rounded-full backdrop-blur-md transition-all cursor-pointer hover:scale-110",
+                      isInCompare
+                        ? "border border-blue-500/30 bg-blue-500/20 text-blue-500"
+                        : "border border-black/5 bg-black/5 text-muted-foreground dark:border-white/5 dark:bg-white/5 dark:hover:bg-white/10",
+                    )}
+                    onClick={handleCompareClick}
+                    title="Compare"
+                  >
+                    <Scale className="h-3 w-3" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>

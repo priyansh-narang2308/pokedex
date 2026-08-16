@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
+
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/logo";
 import { useScroll } from "@/hooks/use-scroll";
@@ -19,6 +20,11 @@ export const navLinks = [
   {
     label: "Favorites",
     href: "/?tab=favorites",
+  },
+  {
+    label: "Compare",
+    href: "/compare",
+    icon: Scale,
   },
 ];
 
@@ -50,33 +56,48 @@ export function Header() {
         )}
       >
         <Link
-          className="rounded-md p-2 hover:bg-muted dark:hover:bg-muted/50 transition-colors"
+          className="rounded-md p-2 transition-colors hover:bg-muted dark:hover:bg-muted/50"
           href="/"
         >
           <Logo />
         </Link>
-        <div className="hidden items-center gap-4 md:flex">
-          <div className="flex items-center gap-1 mr-2">
-            {navLinks.map((link) => (
-              <Button key={link.label} size="sm" variant="ghost">
-                <Link href={link.href}>{link.label}</Link>
-              </Button>
-            ))}
-          </div>
 
-          <Button size="sm" variant="outline" className="gap-2 cursor-pointer relative">
-            <Scale className="h-4 w-4" />
-            Compare
-            {mounted && compareQueue.length > 0 && (
-              <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
-                {compareQueue.length}
-              </span>
-            )}
-          </Button>
+        <div className="hidden items-center gap-3 md:flex">
+          <div className="flex items-center gap-1 rounded-xl border bg-muted/30 p-1">
+            {navLinks.map((link) => {
+              const Icon = link.icon;
+
+              return (
+                <Link key={link.label} href={link.href}>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className={cn(
+                      "relative gap-2 cursor-pointer rounded-lg px-3 transition-all hover:bg-background hover:shadow-sm",
+                    )}
+                  >
+                    {Icon && <Icon className="h-4 w-4" />}
+
+                    {link.label}
+
+                    {link.label === "Compare" &&
+                      mounted &&
+                      compareQueue.length > 0 && (
+                        <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground shadow-sm">
+                          {compareQueue.length}
+                        </span>
+                      )}
+                  </Button>
+                </Link>
+              );
+            })}
+          </div>
 
           <ModeToggle />
         </div>
-        <div className="flex md:hidden items-center gap-2">
+
+        {/* Mobile Navigation */}
+        <div className="flex items-center gap-2 md:hidden">
           <ModeToggle />
           <MobileNav />
         </div>
